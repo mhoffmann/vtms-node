@@ -5,3 +5,4 @@ public/.DS_Store
 node_modules
 bower_components
 server/config/config.js
+.idea
