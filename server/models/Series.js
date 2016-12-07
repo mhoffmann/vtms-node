@@ -8,33 +8,34 @@ let db = require('../config/sequelize.js'),
     TaskGlobal = require('./TaskGlobal.js');
 
 let Series = db.define('series', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
-  },
-  code: {
-    type: Sequelize.STRING
-  },
-  title: {
-    type: Sequelize.STRING
-  },
-  shotAt: {
-    type: Sequelize.INTEGER
-  },
-  checkableAt: {
-    type: Sequelize.INTEGER
-  },
-  ytTitleTemplate: {
-    type: Sequelize.STRING
-  },
-  ytDescriptionTemplate: {
-    type: Sequelize.STRING
-  },
-  levelSignificant: {
-    type: Sequelize.INTEGER
-  }
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    code: {
+        type: Sequelize.STRING
+    },
+    title: {
+        type: Sequelize.STRING
+    },
+    shotAt: {
+        type: Sequelize.INTEGER
+    },
+    checkableAt: {
+        type: Sequelize.INTEGER
+    },
+    ytTitleTemplate: {
+        type: Sequelize.STRING
+    },
+    ytDescriptionTemplate: {
+        type: Sequelize.STRING
+    },
+    levelSignificant: {
+        type: Sequelize.INTEGER
+    }
 }, {
-  timestamps: false
+    timestamps: false
 });
 
 module.exports = Series;
