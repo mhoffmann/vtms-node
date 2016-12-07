@@ -43,7 +43,6 @@ models.Lesson.hasMany(models.Issue, {constraints: false, foreignKey: 'fkLesson'}
 models.Lesson.belongsTo(models.Task, {
     constraints: false,
     as: 'lastTask',
-    constraints: false,
     foreignKey: 'fkLastTask'
 });
 models.Lesson.belongsTo(models.Issue, {as: 'lastIssue', constraints: false, foreignKey: 'fkLastIssue'});
