@@ -9,29 +9,21 @@ var express = require('express'),
 
 var RedisStore = require('connect-redis')(session);
 
-module.exports = function(app, config) {
-  app.set('view engine', 'jade');
-  app.set('views', config.path + 'server/views/');
-  app.use(logger('dev'));
-  app.use(bodyParser.urlencoded({extended: false}));
-  app.use(bodyParser.json());
-  app.use(cookieParser());
-  app.use(session({
-    proxy: true,
-    secret: 'matt is so secretive',
-    resave: false,
-    saveUninitialized: false,
-    genid: function(req) {
-      return shortid.generate();
-    },
-    cookie: {},
-    store: new RedisStore({
-       host: 'localhost',
-       port: 9382
-    })
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.static(config.path + 'public'));
+var sessionConf = config.session;
+sessionConf.store = new RedisStore(config.redis);
+sessionConf.genid = function (req) {
+    return shortid.generate();
+};
 
+module.exports = function (app, config) {
+    app.set('view engine', 'jade');
+    app.set('views', config.path + 'server/views/');
+    app.use(logger('dev'));
+    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(bodyParser.json());
+    app.use(cookieParser());
+    app.use(sessionConf(sessionConf));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(express.static(config.path + 'public'));
 };
