@@ -9,7 +9,9 @@ angular.module('vtms').controller('vtmsVideoCheckArchivalController', function($
     actions: {
       removeFromRenderQueue: false,
       markAsVideoChecked: true,
+	  markAsVideoNotChecked: false,
       markAsLanguageChecked: false,
+	  markAsNotLanguageChecked: true,
       goToCheckingInterface: true,
     },
     columns: {

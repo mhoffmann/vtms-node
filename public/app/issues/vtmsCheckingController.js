@@ -52,6 +52,20 @@ angular.module('vtms').controller('vtmsCheckingController', function($scope, vtm
       angular.extend(ctrl.lesson, newData);
     });
   };
+	
+ctrl.markAsNotLanguageApproved = function() {
+    ctrl.lesson.markAsNotLanguageChecked().then(function(newData) {
+      angular.extend(ctrl.lesson, newData);
+    });
+  };	
+	
+
+  ctrl.markAsVideoNotApproved = function() {
+    ctrl.lesson.markAsVideoNotChecked().then(function(newData) {
+      angular.extend(ctrl.lesson, newData);
+    });
+  };
+
 
   ctrl.markAsVideoApproved = function() {
     ctrl.lesson.markAsVideoChecked().then(function(newData) {
@@ -59,6 +73,8 @@ angular.module('vtms').controller('vtmsCheckingController', function($scope, vtm
     });
   };
 
+
+	
   $scope.$on('time:updated', function(event, time) {
     ctrl.currentTime = time;
   });
