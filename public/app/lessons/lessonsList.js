@@ -95,12 +95,25 @@ angular.module('vtms').directive('lessonsList', function() {
           $rootScope.$broadcast('lesson:videoChecked', videoCheckedLesson);
         });
       };
+		
+	  $scope.markAsVideoNotChecked = function(videoCheckedLesson) {
+        videoCheckedLesson.markAsVideoNotChecked().then(function(newData) {
+          angular.extend(videoCheckedLesson, newData);
+          $rootScope.$broadcast('lesson:videoChecked', videoCheckedLesson);
+        });
+      };
 
       $scope.markAsLanguageChecked = function(languageCheckedLesson) {
         languageCheckedLesson.markAsLanguageChecked().then(function(newData) {
           $rootScope.$broadcast('lesson:languageChecked', languageCheckedLesson);
         });
       };
+		
+	 $scope.markAsNotLanguageChecked = function(languageCheckedLesson) {
+        languageCheckedLesson.markAsNotLanguageChecked().then(function(newData) {
+          $rootScope.$broadcast('lesson:languageChecked', languageCheckedLesson);
+        });
+      };	
 
       $scope.markAsArchived = function(archivedLesson) {
         archivedLesson.markAsArchived().then(function(newData) {
@@ -181,6 +194,17 @@ angular.module('vtms').directive('lessonsList', function() {
       $rootScope.$on('lesson:videoChecked', function(event, lesson) {
         if($scope.config.type === 'archivableLessons') addToList(lesson, $scope.lessonsList);
         if($scope.config.type === 'videoCheckLessons') removeFromList(lesson, $scope.lessonsList);
+      });
+/*
+	  $rootScope.$on('lesson:videoUnChecked', function(event, lesson) {
+        if($scope.config.type === 'archivableLessons') addToList(lesson, $scope.lessonsList);
+        if($scope.config.type === 'videoCheckLessons') removeFromList(lesson, $scope.lessonsList);
+      });	
+	*/	
+		
+		$rootScope.$on('lesson:videoUnChecked', function(event, lesson) {
+        if($scope.config.type === 'archivableLessons') removeFromList(lesson, $scope.lessonsList);
+        if($scope.config.type === 'videoCheckLessons') addToList(lesson, $scope.lessonsList);
       });
 
       $rootScope.$on('lesson:languageChecked', function(event, lesson) {

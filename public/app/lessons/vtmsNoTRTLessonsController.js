@@ -21,6 +21,8 @@ angular.module('vtms').controller('vtmsNoTRTLessonsController', function($scope,
       markAsExported: false,
       markAsVideoChecked: false,
       markAsLanguageChecked: false,
+	  markAsNotLanguageChecked: true,
+	  markAsVideoNotChecked: true,
       markAsArchived: false,
       goToCheckingInterface: false,
       delete: false

@@ -1,10 +1,10 @@
 angular.module('vtms').factory('vtmsLesson', function($resource, $q, vtmsNotifier) {
   var LessonResource = $resource('/api/lessons/:id', {id: "@id"}, {
     update: {method:'PUT', isArray: false},
-    getList: {method:'GET', url: '/api/language-series/:id/lessons', isArray:true},
+    getList: {method:'GET', url: '/api/languageSeries/:id/lessons', isArray:true},
     getQueued: {method:'GET', url: '/api/lessons/queued', isArray: true},
     getLessonsForSeries: {method:'GET', url: '/api/series/:id/lessons', isArray: true},
-    getReadyToRender: {method:'GET', url: '/api/lessons/ready-to-render', isArray: true},
+    getReadyToRender: {method:'GET', url: '/api/lessons/readyToRender', isArray: true},
     getIssues: {method:'GET', url: '/api/lessons/issues', isArray: true},
     getLessonsWithIssuesForMember: {method: 'GET', url: '/api/lessons/issues/team-member/:id', isArray: true},
     getVideoCheckLessons: {method: 'GET', url: '/api/lessons/video-checkable', isArray: true},
@@ -13,7 +13,6 @@ angular.module('vtms').factory('vtmsLesson', function($resource, $q, vtmsNotifie
     getNoTRTLessons: {method: 'GET', url: '/api/lessons/no-trt', isArray: true},
     getLessonsWithUnassignedIssues: {method: 'GET', url: '/api/issues/lessons/unassigned', isArray: true}
   });
-
 
   LessonResource.prototype.dueDate = function() {
     if(this.publishDates.length > 1) {
@@ -159,15 +158,53 @@ angular.module('vtms').factory('vtmsLesson', function($resource, $q, vtmsNotifie
 
     return dfd.promise;
   };
+	
+LessonResource.prototype.markAsVideoNotChecked = function() {
+    var dfd = $q.defer();
+
+    var lessonString = this.languageSery.title + " #" + this.number + " - " + this.title;
+    var notification = lessonString + " has been marked as video UN-checked.";
+
+    this.update({
+      checkedVideo: false,
+      checkedVideoTime: moment(Date.now()).utc().format('YYYY-MM-DD HH:mm:ss')
+    }).then(function(newData) {
+      vtmsNotifier.notify(notification);
+      dfd.resolve(newData);
+    }, function(response) {
+      dfd.reject(response);
+    });
+
+    return dfd.promise;
+  };	
 
   LessonResource.prototype.markAsLanguageChecked = function() {
     var dfd = $q.defer();
 
     var lessonString = this.languageSery.title + " #" + this.number + " - " + this.title;
-    var notification = lessonString + " has been marked as language checked.";
+    var notification = lessonString + " has been marked as language checked. ";
 
     this.update({
       checkedLanguage: true,
+      checkedLanguageTime: moment(Date.now()).utc().format('YYYY-MM-DD HH:mm:ss')
+    }).then(function(newData) {
+      vtmsNotifier.notify(notification);
+      dfd.resolve(newData);
+    }, function(response) {
+      dfd.reject(response);
+    });
+
+    return dfd.promise;
+  };
+	
+	LessonResource.prototype.markAsNotLanguageChecked = function() {
+    var dfd = $q.defer();
+
+    var lessonString = this.languageSery.title + " #" + this.number + " - " + this.title;
+    var notification = lessonString + " has been marked as language UUUUUUUNNNNNN checked. yeah, teh language be all wrong.. You pay now!";
+
+    this.update({
+      checkedLanguage: false,
       checkedLanguageTime: moment(Date.now()).utc().format('YYYY-MM-DD HH:mm:ss')
     }).then(function(newData) {
       vtmsNotifier.notify(notification);

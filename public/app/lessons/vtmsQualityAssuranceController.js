@@ -21,7 +21,9 @@ angular.module('vtms').controller('vtmsQualityAssuranceController', function($sc
       removeFromRenderQueue: false,
       markAsExported: false,
       markAsVideoChecked: false,
+	  markAsVideoNotChecked: true,
       markAsLanguageChecked: true,
+	  markAsNotLanguageChecked: false,
       markAsArchived: false,
       goToCheckingInterface: true,
       delete: false

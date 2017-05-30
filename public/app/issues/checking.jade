@@ -19,6 +19,8 @@
 .container(ng-show="ctrl.identity.isAdmin()")
   .btn-group(role="group")
     button.btn.btn-default(ng-hide="ctrl.lesson.checkedLanguage", type="button", ng-click="ctrl.markAsLanguageApproved()") Mark as Language Approved
+    button.btn.btn-default(ng-show="ctrl.lesson.checkedLanguage", type="button", ng-click="ctrl.markAsNotLanguageApproved()") Mark as Language NOT Approved
     button.btn.btn-default(ng-hide="ctrl.lesson.checkedVideo", type="button", ng-click="ctrl.markAsVideoApproved()") Mark as Video Approved
+    button.btn.btn-default(ng-show="ctrl.lesson.checkedVideo", type="button", ng-click="ctrl.markAsVideoNotApproved()") Mark as Video NOT Approved
 .container
   issues-list(config="ctrl.issuesConfig", current-time="ctrl.currentTime")
